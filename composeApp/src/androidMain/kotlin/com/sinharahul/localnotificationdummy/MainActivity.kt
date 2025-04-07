@@ -21,13 +21,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            var hasPermissions by remember {
+            var hasPermission by remember {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                     mutableStateOf(
                         ContextCompat.checkSelfPermission(
                             this,
                             android.Manifest.permission.POST_NOTIFICATIONS
-                        ) = PackageManager.PERMISSION_GRANTED
+                        ) == PackageManager.PERMISSION_GRANTED
                     )
                 } else {
                     mutableStateOf(true)
@@ -37,7 +37,7 @@ class MainActivity : ComponentActivity() {
             val notificationPermissionLauncher = rememberLauncherForActivityResult(
                 contract = ActivityResultContracts.RequestPermission(),
                 onResult = { granted ->
-                    hasPermissions = granted
+                    hasPermission = granted
                 }
             )
 
